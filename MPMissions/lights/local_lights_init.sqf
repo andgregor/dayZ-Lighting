@@ -7,7 +7,7 @@ private ["_plyPos","_sunrise","_slpTime","_lpRange","_hsRange","_nrGen","_genCou
 
 //Start / Stop Time
 _doHouse = true;
-_doTower = false;
+_doTower = true;
 _noStreetLights = false;
 _ndGen = _this select 0;
 _rndLights = _this select 1;//Default 12
