@@ -1,7 +1,7 @@
-dayZ Lighting
-=============
+dayZ Lighting - Designed for Epoch
+==================================
 
-House and Illuminant Tower Lights.
+House and Illuminant Tower Lights. 
 
 Current version should take into account previous lag issues causesd by lighting.
 
