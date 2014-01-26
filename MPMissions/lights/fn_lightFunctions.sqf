@@ -1,6 +1,6 @@
 /*
 	DayZ Epoch Lighting System - Light Functions
-	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email vbawol@veteranbastards.com.
+	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email gregory.andrew@gmail.com.
 */
 axe_NoStreetLights={//For testing - Need to see brightness of house lights
 private["_lights","_rng","_target","_objName"];
