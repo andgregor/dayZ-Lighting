@@ -34,3 +34,6 @@ Additionally, randomly failed house lights and street lights were broadcast as c
 This version uses the "animationPhase" of each house as the basis for lighting for all players (incl. JIP). There is a set amount of houses that can be lit within a radius, currently 480m from the player, that is decided by the percentage entered in the init (default = 12).
 
 No matter how many players join there will never be more than 12% (unless changed) of houses lit within 480m of each player. Other players can only light more houses if the threshold is not reached..
+
+OPTIMISATION:
+Additionally, there is a boundary around the edge of the lighting radius where lightpoints are deleted as the player moves out of the area. Existing lights' brightness is updated as the player moves around, more distant lights are brighter. No updates are made until the player moves 6m from their current position..
