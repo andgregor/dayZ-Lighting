@@ -1,6 +1,6 @@
 /*
 	DayZ Epoch Lighting System - Light Init
-	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email vbawol@veteranbastards.com.
+	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email gregory.andrew@gmail.com.
 
 */
 private ["_plyPos","_sunrise","_slpTime","_lpRange","_hsRange","_nrGen","_genCount","_rndLights","_genClass","_doHouse","_doTower","_doLight","_fnHr","_stHr","_plyr","_ndGen","_trgRng","_rngPlyr","_lightTrig","_lmpCol","_houseNum"];
