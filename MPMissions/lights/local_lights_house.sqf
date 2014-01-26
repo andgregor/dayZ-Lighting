@@ -1,6 +1,6 @@
 /*
 	DayZ Epoch Lighting System - House Lights
-	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email vbawol@veteranbastards.com.
+	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email gregory.andrew@gmail.com.
 */
 private ["_validHouses","_animPhase","_maxHouses","_houseNum","_plyr","_objLightPoint","_pos","_objHouse","_dir","_rng","_rngPlyr","_lpRange","_nrstTrig","_lmpCol","_hsAnimPer","_brtns","_lightPcnt","_hsLPDist","_notLitHouses","_areaLit","_litHouses","_hsAnimPhase","_litWindowFound","_currLighting"];
 
