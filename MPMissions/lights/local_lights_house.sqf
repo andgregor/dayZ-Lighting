@@ -33,10 +33,11 @@ _maxHouses = 0;
 //TESTING
 
 
+
 _objHouse = nearestObjects [_nrstTrig, ["House"], _rng]; 
 
-axeDiagLog = format["HL:HOUSE NUM:%1 (From Last Run) | Range:%2 | Total House Objs:%3",_houseNum,_rng, count _objHouse];
-publicVariable "axeDiagLog";
+//axeDiagLog = format["HL:HOUSE NUM:%1 (From Last Run) | Range:%2 | Total House Objs:%3",_houseNum,_rng, count _objHouse];
+//publicVariable "axeDiagLog";
 
 _houseNum = count _objHouse;
 
@@ -66,8 +67,8 @@ if(!isNil "_objHouse")then{
 	
 	_maxHouses = ((_validHouses/100)*_lightPcnt);
 
-	axeDiagLog = format["HL:START(%5): Max Houses: %1 | Previous Houses: %2 | LIT HOUSES:%3 | Not Lit:%4",_maxHouses, _houseNum,count _litHouses,count _notLitHouses, name player];
-	publicVariable "axeDiagLog";
+	//axeDiagLog = format["HL:START(%5): Max Houses: %1 | Previous Houses: %2 | LIT HOUSES:%3 | Not Lit:%4",_maxHouses, _houseNum,count _litHouses,count _notLitHouses, name player];
+	//publicVariable "axeDiagLog";
 				
 	if(count _litHouses < _maxHouses)then{
 	_currLighting = count _litHouses;
@@ -96,8 +97,8 @@ if(!isNil "_objHouse")then{
 				_brtns = [_plyr,_x] call axe_lightBrightness;
 				while{true}do{sleep .1;if (_x animationPhase "Lights_1"==1) exitWith {};};
 				
-				axeDiagLog = format["HL:NEW HOUSE LIT:%1",_x];
-				publicVariable "axeDiagLog";
+				//axeDiagLog = format["HL:NEW HOUSE LIT:%1",_x];
+				//publicVariable "axeDiagLog";
 				
 				_objLightPoint = nearestObject [_x, "#lightpoint"];
 				_pos = getPos _x;
@@ -116,8 +117,8 @@ if(!isNil "_objHouse")then{
 		}forEach _notLitHouses;
 	
 	}else{
-	axeDiagLog = format["House Limit Reached(%3): Max:%1 | Count:%2",_maxHouses,count _litHouses,name player];
-	publicVariable "axeDiagLog";
+	//axeDiagLog = format["House Limit Reached(%3): Max:%1 | Count:%2",_maxHouses,count _litHouses,name player];
+	//publicVariable "axeDiagLog";
 	};
 	
 	if(count _litHouses > 0 )then{
@@ -137,8 +138,8 @@ if(!isNil "_objHouse")then{
 				//publicVariable "axeDiagLog";
 				}else{//If outside create radius delete light that IS in house
 				
-				axeDiagLog = format["HL:Deleteing old light %1 for %2 ",_objLightPoint,name player];
-				publicVariable "axeDiagLog";
+				//axeDiagLog = format["HL:Deleteing old light %1 for %2 ",_objLightPoint,name player];
+				//publicVariable "axeDiagLog";
 				deleteVehicle _objLightPoint;//Clean up lightpoints as player leaves area.
 				
 				};
