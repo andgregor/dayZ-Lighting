@@ -33,7 +33,6 @@ _maxHouses = 0;
 //TESTING
 
 
-
 _objHouse = nearestObjects [_nrstTrig, ["House"], _rng]; 
 
 axeDiagLog = format["HL:HOUSE NUM:%1 (From Last Run) | Range:%2 | Total House Objs:%3",_houseNum,_rng, count _objHouse];
