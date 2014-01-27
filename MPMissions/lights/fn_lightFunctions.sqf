@@ -68,9 +68,9 @@ _target = _this select 1;
 
 if(isNil "dayz_fullMoonNights")then{dayz_fullMoonNights = false;};
 if(dayz_fullMoonNights)then{
-_brtns = 0.018;
+_brtns = 0.024;
 }else{
-_brtns = 0.011;
+_brtns = 0.018;
 };
 _brtns = _brtns + ((_brtns/100) * ((_plyr distance _target)/15)); //Add percentage of brightness based on distance from player
 //Min / Max Levels
