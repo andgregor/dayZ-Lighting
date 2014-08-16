@@ -32,9 +32,9 @@ Add to your init.sqf (within your mpmission folder) the following:
 Parameters
 ---------
 
-**DZE_RequireGenerator** : Require a running Epoch generator, in the vicinity, to allow lighting of houses and towers. The generator logic hasn't really changed in this version, awaiting further testing.
+**DZE_RequireGenerator** : Require a running Epoch generator, in the vicinity, to allow lighting of houses and towers. The generator logic hasn't really changed in this version.
 
-**DZE_StreetLights** : Set to false to switch off street lights within a specified range of the player (Under Testing).
+**DZE_StreetLights** : Set to false to switch off street lights within a specified range of the player.
 
 **DZE_HouseLights** : Set to true to light up houses around the player.
 
@@ -42,3 +42,8 @@ Parameters
 
 **DZE_LightChance** : Adds a random chance for houses to be lit. Allows an element of control for the server host to reduce the number of lit houses.
 
+
+Requirements
+------------
+
+This new code has been tested locally and has been released for server owners to try out and to provide feedback. You must be comfortable with running custom scripts and diagnosing any issues that may arise from adding custom scripts to your server.
