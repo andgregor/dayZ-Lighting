@@ -2,7 +2,7 @@
 	DayZ Epoch Lighting System - Light Functions
 	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email gregory.andrew@gmail.com.
 */
-axe_NoStreetLights={//For testing - Need to see brightness of house lights
+axe_NoStreetLights={
 private["_lights","_rng","_target","_objName"];
 _target = _this select 0;
 _rng = _this select 1;
@@ -62,7 +62,7 @@ _lp setLightAmbient _amb;
 
 //return brightness of light attached to object
 axe_lightBrightness={
-private["_plyr","_brtns","_lightPcnt","_target"];
+private["_plyr","_brtns","_target"];
 _plyr = _this select 0;
 _target = _this select 1;
 
