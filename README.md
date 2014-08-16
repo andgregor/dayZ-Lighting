@@ -46,7 +46,7 @@ Parameters
 
 Debugging
 ---------
-There are many lines debugging code, commented out, throughout the code. Use the tools folder to enable logging to your .rpt file from the client.
+There are many lines of debug code, commented out, throughout the addon. Use the tools folder to enable logging to your .rpt file from the client.
 
 
 Requirements
