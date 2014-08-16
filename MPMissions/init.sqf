@@ -5,11 +5,14 @@
 	};
 	
 	
-	
-	
 	//Do Add this bit:
-	//Required for mission lighting system (Testing new lights - comment out existing light init from Epoch standard init.sqf)
+	//Required for mission lighting system
 	if (!isDedicated) then {
 	//Lights
-	[false,12] execVM "lights\local_lights_init.sqf";//[REQUIRE GENERATOR (true/false),Light Chance %]
+	DZE_RequireGenerator = false;
+	DZE_StreetLights = false;
+	DZE_HouseLights = true;
+	DZE_TowerLights = true;
+	DZE_LightChance = 42;
+	[] execVM "lights\local_lights_init.sqf";
 	};
