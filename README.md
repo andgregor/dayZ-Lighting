@@ -1,39 +1,44 @@
-dayZ Lighting - Designed for Epoch
-==================================
+dayZ House, Illuminant Tower and Street Lighting by axeman.
+-----------------------------------------------------------
 
-House and Illuminant Tower Lights. 
+This addon is designed for usage with dayZ Epoch as it includes a generator requirement. However, this can probably be used on other dayZ mode simply by disabling the generator requirement (not tested).
 
-Current version should take into account previous lag issues causesd by lighting.
+This version is currently at a further / final test stage. The aim is to remove lag issues from creating too many light sources / vehicles and to add in more stringent management of the lights created.
 
-INSTALLATION:
+**What This Does**: This addon is run entirely clientside, this is a requirement of the engine as light sources are local only. It will light up the windows of nearby houses and create an ambient light source to light the surrounding area. Street lights can be disabled. Illuminant towers will create a strong light source with 4 light points.
 
-This is currently a mission until testing complete:
+**House Lights**: It looks for houses that have windows that can be lit using the house animationSources Lights_1 / lights_2 etc. The script manages already lit houses to reduce constant looping and too many instances of #lightpoint on each house.
 
-Copy lights folder to your mission directory and call with:
+**Street Lights**: As it is designed for Epoch, this current version, when set to true, will leave the street lights on. When set to false will loop through nearby objects and switch off any sreetlights found.
 
-USAGE:
+**Tower Lights**: Will create four #lightpoint objects aligned to match the light tower model.
 
-From your mission init.sqf call:
 
-if (!isDedicated) then {
-[false,12] execVM "lights\local_lights_init.sqf";
-};
+Usage / Installation
+--------------------
 
-Parameters:
+Add to your init.sqf (within your mpmission folder) the following:
 
-1: Generator required ? (Boolean) - If true a generator of class name "Generator_DZ" is required to light houses. (Currently not tested) So stick with false. Is using the old code for generator detection so should work fine..
+`if (!isDedicated) then {
+//Lights
+	DZE_RequireGenerator = false;
+	DZE_StreetLights = true;
+	DZE_HouseLights = true;
+	DZE_TowerLights = true;
+	DZE_LightChance = 42;
+	[] execVM "lights\local_lights_init.sqf";
+};`
 
-2: Lighting Amount (percentage). Is a percentage of houses within 480m of the player that can be lit. Only houses with windows that can be illuminated are counted.
+Parameters
+---------
 
-CHANGELOG:
+**DZE_RequireGenerator** : Require a running Epoch generator, in the vicinity, to allow lighting of houses and towers. The generator logic hasn't really changed in this version, awaiting further testing.
 
-When lighting a window on a house with "_house animate ["Lights_1",1];" the state of the house "animationPhase" is broadcast to all players on the server (this can not be changed). This was the previous cause of lag as each player created more lit houses. Every change was broadcast, ultimately all houses would be lit.
+**DZE_StreetLights** : Set to false to switch off street lights within a specified range of the player (Under Testing).
 
-Additionally, randomly failed house lights and street lights were broadcast as changes. With no control over specific lights being failed each player randomly failed their 'own' lights and broadcast each change to all other players, causing too much network traffic.
+**DZE_HouseLights** : Set to true to light up houses around the player.
 
-This version uses the "animationPhase" of each house as the basis for lighting for all players (incl. JIP). There is a set amount of houses that can be lit within a radius, currently 480m from the player, that is decided by the percentage entered in the init (default = 12).
+**DZE_TowerLights** : Set to true to light up Illuminant Towers around the player.
 
-No matter how many players join there will never be more than 12% (unless changed) of houses lit within 480m of each player. Other players can only light more houses if the threshold is not reached..
+**DZE_LightChance** : Adds a random chance for houses to be lit. Allows an element of control for the server host to reduce the number of lit houses.
 
-OPTIMISATION:
-Additionally, there is a boundary around the edge of the lighting radius where lightpoints are deleted as the player moves out of the area. Existing lights' brightness is updated as the player moves around, more distant lights are brighter. No updates are made until the player moves 6m from their current position..
