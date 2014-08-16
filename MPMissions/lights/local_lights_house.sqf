@@ -2,7 +2,7 @@
 	DayZ Epoch Lighting System - House Lights
 	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email gregory.andrew@gmail.com.
 */
-private ["_validHouses","_animPhase","_maxHouses","_houseNum","_plyr","_objLightPoint","_pos","_objHouse","_dir","_rng","_rngPlyr","_lpRange","_nrstTrig","_lmpCol","_hsAnimPer","_brtns","_lightPcnt","_hsLPDist","_notLitHouses","_areaLit","_litHouses","_hsAnimPhase","_litWindowFound","_currLighting"];
+private ["_validHouses","_animPhase","_maxHouses","_houseNum","_plyr","_objLightPoint","_pos","_objHouse","_dir","_rng","_lpRange","_nrstTrig","_lmpCol","_brtns","_lightPcnt","_hsLPDist","_notLitHouses","_litHouses","_currLighting"];
 
 
 //test
@@ -20,11 +20,10 @@ _houseNum = _this select 5;
 _hsLPDist = 2; //Distance to detect local lightpoint from house center
 _notLitHouses = [];
 _litHouses = [];
-_areaLit = false;
-_litWindowFound = false;
 _currLighting = 0;
 _validHouses = 0;
 _maxHouses = 0;
+_dir = 0;
 //Create a routine to reduce range if house amount limit is hit, reduce lag in cities..
 
 
@@ -54,9 +53,9 @@ if(!isNil "_objHouse")then{
 		//publicVariable "axeDiagLog";
 				
 		if(_animPhase>0)then{//Only if has a window (Lights_1)
-			if(_x animationPhase "Lights_1" == 0)then{//If not lit
+			if(_x animationPhase "Lights_1" < 0.1)then{//If not lit
 				[_notLitHouses , _x] call BIS_fnc_arrayPush;
-			}else{//Already Lit - Do your thing.. later
+			}else{//Already Lit - Do your thing later
 				[_litHouses , _x] call BIS_fnc_arrayPush;
 				_currLighting = _currLighting + 1;
 			};
