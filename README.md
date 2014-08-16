@@ -40,7 +40,7 @@ Parameters
 
 **DZE_TowerLights** : Set to true to light up Illuminant Towers around the player.
 
-**DZE_LightChance** : Adds a random chance for houses to be lit. Allows an element of control for the server host to reduce the number of lit houses.
+**DZE_LightChance** : Adds a percentage chance for houses to be lit. Allows an element of control for the server host to reduce the number of lit houses.
 
 
 Requirements
