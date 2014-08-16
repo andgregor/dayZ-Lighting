@@ -1,6 +1,6 @@
 /*
 	DayZ Epoch Lighting System - Illuminant Tower Lights
-	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email gregory.andrew@gmail.com.
+	Made for DayZ Epoch by axeman please ask permission to use/edit/distribute email vbawol@veteranbastards.com.
 */
 private ["_nrTowers","_nrstTrig","_lCol","_lbrt","_lamb","_twrCl"]; 
 _nrstTrig = _this select 1;
