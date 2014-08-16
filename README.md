@@ -29,6 +29,7 @@ Add to your init.sqf (within your mpmission folder) the following:
 	[] execVM "lights\local_lights_init.sqf";
 };`
 
+
 Parameters
 ---------
 
@@ -43,7 +44,11 @@ Parameters
 **DZE_LightChance** : Adds a percentage chance for houses to be lit. Allows an element of control for the server host to reduce the number of lit houses.
 
 
+Debugging
+---------
+There are many lines debugging code, commented out, throughout the code. Use the tools folder to enable logging to your .rpt file from the client.
+
+
 Requirements
 ------------
-
 This new code has been tested locally and has been released for server owners to try out and to provide feedback. You must be comfortable with running custom scripts and diagnosing any issues that may arise from adding custom scripts to your server.
