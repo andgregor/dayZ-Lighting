@@ -5,15 +5,16 @@
 */
 
 if(!isDedicated)then{
-	private ["_plyPos","_sunrise","_slpTime","_lpRange","_hsRange","_nrGen","_genCount","_rndLights","_genClass","_doHouse","_doTower","_doLight","_fnHr","_stHr","_plyr","_ndGen","_trgRng","_rngPlyr","_lightTrig","_lmpCol","_houseNum"];
+	private ["_plyPos","_sunrise","_slpTime","_lpRange","_hsRange","_nrGen","_genCount","_genClass","_doLight","_fnHr","_stHr","_plyr","_trgRng","_rngPlyr","_lightTrig","_lmpCol","_houseNum","_noStreetLights"];
 
-	//Start / Stop Time
-	_doHouse = true;
-	_doTower = true;
-	_noStreetLights = true;
-	_ndGen = _this select 0;
-	_rndLights = _this select 1;//Default 12
-	if(_rndLights<1)exitWith{};//EXIT
+	if(isNil"DZE_LightChance")then{DZE_LightChance=0};
+	if(isNil"DZE_RequireGenerator")then{DZE_RequireGenerator=false};
+	if(isNil"DZE_StreetLights")then{DZE_StreetLights=false};
+	if(isNil"DZE_HouseLights")then{DZE_HouseLights=true};
+	if(isNil"DZE_TowerLights")then{DZE_TowerLights=true};
+	
+	
+	if(DZE_LightChance<1)exitWith{};//EXIT
 	_trgRng = 280;//Distance from Gen
 	_rngPlyr = 480;//Distance from Player
 	_lmpCol = [0.698, 0.556, 0.419];//Light colour
@@ -29,6 +30,8 @@ if(!isDedicated)then{
 	call compile preprocessFileLineNumbers "lights\fn_lightFunctions.sqf";
 	axeTowerLights = compile preprocessFileLineNumbers "lights\local_lights_tower.sqf";
 	axeHouseLights = compile preprocessFileLineNumbers "lights\local_lights_house.sqf";
+	axeTowerLightsOff = compile preprocessFileLineNumbers "lights\local_lights_tower_off.sqf";
+	axeHouseLightsOff = compile preprocessFileLineNumbers "lights\local_lights_house_off.sqf";
 
 	waitUntil {getPos Player select 0 > 0};
 
@@ -36,7 +39,7 @@ if(!isDedicated)then{
 	_sunrise = call world_sunRise;
 	_fnHr =  _sunrise + 0.5;
 	_stHr =  (24 - _sunrise) - 0.5;
-	if(_rndLights>75)then{_rndLights=75;};//Max allowed
+	if(DZE_LightChance>75)then{DZE_LightChance=75;};//Max allowed
 	//axeDiagLog = format["IL:LIGHTS STARTED: _stHr:%1 | _fnHr:%2 | time:%3 | for:%4",_stHr,_fnHr, dayTime, vehicle player];
 	//publicVariable "axeDiagLog";
 				
@@ -46,7 +49,7 @@ if(!isDedicated)then{
 			//if(_plyPos distance _plyr > 6)then{//Only run if player moves
 			_lightTrig = _plyr;
 			
-			if(_ndGen)then{
+			if(DZE_RequireGenerator)then{
 			_nrGen = nearestObjects [_plyr, [_genClass], _rngPlyr];
 			_genCount = count _nrGen;
 			
@@ -61,44 +64,52 @@ if(!isDedicated)then{
 				};
 			};
 			
-			//if(!_ndGen)then{_lightTrig = _plyr;};
+			//if(!DZE_RequireGenerator)then{_lightTrig = _plyr;};
 			
 			//Nearby Generator ?
-			if(_ndGen && _genCount<1)then{_doLight = false;}else{_doLight=true;};
+			if(DZE_RequireGenerator && _genCount<1)then{_doLight = false;}else{_doLight=true;};
 			
 			//Generator not required !
-			if(!_ndGen)then{_doLight = true;};
+			if(!DZE_RequireGenerator)then{_doLight = true;};
 			
 			//Choose range, player or generator
-			if(_ndGen)then{_hsRange = _trgRng;}else{_hsRange = _rngPlyr;};
+			if(DZE_RequireGenerator)then{_hsRange = _trgRng;}else{_hsRange = _rngPlyr;};
 			
 			//100% chance of lights with nearby generator - ToDo, make this slightly lower.
-			if(_ndGen && _genCount>0&&(_lightTrig getVariable["GeneratorRunning",false]))then{
-			_rndLights = 75;
+			if(DZE_RequireGenerator && _genCount>0&&(_lightTrig getVariable["GeneratorRunning",false]))then{
+			DZE_LightChance = 75;
 			};
 			
-			if(_ndGen && !(_lightTrig getVariable["GeneratorRunning",false]))then{_doLight = false;};//Final check - Not run if nearest gen isn't running
+			if(DZE_RequireGenerator && !(_lightTrig getVariable["GeneratorRunning",false]))then{_doLight = false;};//Final check - Not run if nearest gen isn't running
 			
-			//axeDiagLog = format["IL:RUNNING: _doLight:%1 | _ndGen:%2 | _lightTrig:%3 | _rndLights:%4",_doLight,_ndGen,_lightTrig,_rndLights];
+			//axeDiagLog = format["IL:RUNNING: _doLight:%1 | DZE_RequireGenerator:%2 | _lightTrig:%3 | DZE_LightChance:%4",_doLight,DZE_RequireGenerator,_lightTrig,DZE_LightChance];
 			//publicVariable "axeDiagLog";
 					
 					if(_doLight)then{
 						//if(speed _plyr > 0 )then{
-						if(_doHouse)then{
-						//axeDiagLog = format["IL:RUNNING HOUSE: _doLight:%1 | _ndGen:%2 | _lightTrig:%3 | _rndLights:%4",_doLight,_ndGen,_lightTrig,_rndLights];
+						if(DZE_HouseLights)then{
+						//axeDiagLog = format["IL:RUNNING HOUSE: _doLight:%1 | DZE_RequireGenerator:%2 | _lightTrig:%3 | DZE_LightChance:%4",_doLight,DZE_RequireGenerator,_lightTrig,DZE_LightChance];
 						//publicVariable "axeDiagLog";
-						_houseNum = [_hsRange,_lightTrig,_rndLights,_lmpCol,_plyr,_houseNum] call axeHouseLights;
+						_houseNum = [_hsRange,_lightTrig,DZE_LightChance,_lmpCol,_plyr,_houseNum] call axeHouseLights;
 						};
 						//};
-						if(_doTower)then{
-						//axeDiagLog = format["IL:RUNNING TOWER: _doLight:%1 | _ndGen:%2 | _lightTrig:%3 | _rndLights:%4",_doLight,_ndGen,_lightTrig,_rndLights];
+						if(DZE_TowerLights)then{
+						//axeDiagLog = format["IL:RUNNING TOWER: _doLight:%1 | DZE_RequireGenerator:%2 | _lightTrig:%3 | DZE_LightChance:%4",_doLight,DZE_RequireGenerator,_lightTrig,DZE_LightChance];
 						//publicVariable "axeDiagLog";
-						[_rngPlyr,_lightTrig,_rndLights] call axeTowerLights;
+						[_rngPlyr,_lightTrig,DZE_LightChance] call axeTowerLights;
+						};					
+					}else{
+						if(DZE_HouseLights)then{//House lights off
+						[_hsRange,_lightTrig,DZE_LightChance,_lmpCol,_plyr,_houseNum] call axeHouseLightsOff;
 						};
 						
-						if(_noStreetLights)then{
-						[player,_rngPlyr] call axe_NoStreetLights
+						if(DZE_TowerLights)then{//Tower lights off
+						[_rngPlyr,_lightTrig,DZE_LightChance] call axeTowerLightsOff;
 						};
+					};
+					
+					if(!DZE_StreetLights)then{
+					[player,_hsRange] call axe_NoStreetLights
 					};
 			//};
 		_plyPos = getPos player;
@@ -106,48 +117,3 @@ if(!isDedicated)then{
 	sleep _slpTime;
 	};
 };
-//Attempt a server cleanup - Not detectable..
-/*
-if(isServer)then{
-
-	server_spawnCleanLightpoints = {
-		private ["_pos","_delQtyLights","_qty","_missonLights","_nearby","_missionObjs"];
-		if(!isNil "DZE_DYN_cleanLightpoints") exitWith { };
-		DZE_DYN_cleanLightpoints = true;
-		_missonLights = entities "#lightpoint";
-		_missionObjs =  allMissionObjects "#lightpoint";
-		diag_log (format["CLEANUP: Attempting Cleanup of Lights out of %1 or %2",count _missonLights, count _missionObjs]);
-		_delQtyLights = 0;
-		{
-			if (local _x) then {
-				_x call dayz_perform_purge;
-				sleep 0.025;
-				_delQtyLights = _delQtyLights + 1;
-			} else {
-				if (!alive _x) then {
-					_pos = getPosATL _x;
-					if (count _pos > 0) then {
-						_nearby = {(isPlayer _x) and (alive _x)} count (_pos nearEntities [["CAManBase","AllVehicles"], 420]);//Use calculated range here.
-						if (_nearby==0) then {
-							_x call dayz_perform_purge;
-							sleep 0.025;
-							_delQtyLights = _delQtyLights + 1;
-						};
-					};
-				};
-			};
-			sleep 0.001;
-		} forEach _missonLights;
-		if (_delQtyLights > 0) then {
-			_qty = count _missonLights;
-			diag_log (format["CLEANUP: Deleted %1 Lights out of %2",_delQtyLights,_qty]);
-		};
-		DZE_DYN_cleanLightpoints = nil;
-	};
-	
-	while{true}do{
-	[] spawn server_spawnCleanLightpoints;
-	sleep 30;
-	};
-};
-*/
